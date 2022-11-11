@@ -1,0 +1,234 @@
+﻿@model Internship_Template.Models.Entity.T_RESERVE
+
+@{
+    ViewBag.Title = "予約画面";
+}
+@Styles.Render("~/Content/common")
+@Styles.Render("~/Content/customdatatable.css")
+@Styles.Render("~/Content/jquery.dataTables.css")
+@Styles.Render("~/Content/dataTables.bootstrap4.css")
+@Styles.Render("~/Content/site.css")
+
+@Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+@Scripts.Render("~/Scripts/dataTables.bootstrap4.min.js")
+
+<style>
+    /*全要素は左側にマージンを取る*/
+    .all {
+        margin-left: 40px;
+    }
+
+    /*選択リスト*/
+    .list {
+        display: inline-block;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()
+
+
+<div class="form-horizontal">
+    <div class="all">
+        <h4>予約内容を入力してください。</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+        <!--上り下りを選択-->
+        @{
+            // checked 設定
+
+            string upBtn = string.Empty;
+            string downBtn = string.Empty;
+
+            if (ViewBag.Direction == "0")
+            {
+                upBtn = "checked";
+            }
+            else
+            {
+                downBtn = "checked";
+            }
+
+ <!--支払い方法を選択-->
+                // checked 設定
+
+                string card = string.Empty;
+                string coin = string.Empty;
+
+                if (ViewBag.Payment == "1")
+                {
+                    card = "checked";
+                }
+                else
+                {
+                    coin = "checked";
+                }
+
+
+ <!--ラジオボタン 初期値未反映, modelの参照先を調整して修正予定-->
+            <div class="form-group">
+                <div class="col-md-10" style="display:flex; flex-direction:row; align-items:center;">
+                    <div style="display:flex; flex-direction:row">
+
+                        <!-- チェックボックスのチェック有無：サンプル -->
+                        @if (upBtn == "checked")
+                            {
+                        @Html.RadioButton("up", "", true, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                        @Html.RadioButton("up", "", false, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                            }
+
+
+                        @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger", @checked = "downBtn" })
+                        <label style="min-width:100px;">上り</label>
+                    </div>
+                    <div style="display:flex; flex-direction:row">
+                        <!-- チェックボックスのチェック有無：サンプル -->
+                        @if (downBtn == "checked")
+                            {
+                        @Html.RadioButton("dwn", "", true, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                        @Html.RadioButton("dwn", "", false, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                            }
+
+
+                        @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+                        <label style="min-width:100px;">下り</label>
+                    </div>
+
+                    <!-- 日付 -->
+                    @Html.LabelFor(model => model.DATEANDTIMEID, "日付", htmlAttributes: new { @class = "control-label col-xs-2" })
+
+                    @Html.DropDownList("DATEANDTIMEID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.T_DATEANDTIME.T_TIMETABLE.HITACHI_TIME, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+
+
+        <!-- 出発場所 -->
+        <div class="col-md-10" style="display:flex; flex-direction:row; align-items:center;">
+            <div class="form-group">
+                <label style="min-width:100px;">出発場所</label>
+                <div class="col-md-15">
+                    @Html.DropDownListFor(model => model.STARTPOINTID, (SelectList)ViewBag.STARTPOINTID, null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.STARTPOINTID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!-- 到着場所 -->
+            <div class="form-group">
+                <label style="min-width:100px;">到着場所</label>
+                <div class="col-md-15">
+                    @Html.DropDownListFor(model => model.ENDPOINTID, (SelectList)ViewBag.ENDPOINTID, null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ENDPOINTID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">バスの座席</div>
+            <img src="/image/seat.png" width="700" height="250" />
+        </div>
+
+        <!--
+        <div class="form-group">
+            @Html.LabelFor(model => model.SEAT, "座席", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SEAT, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SEAT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        -->
+        <!--座席の列-->
+        <div class="col-md-10" style="display:flex; flex-direction:row; align-items:center;">
+            <div class="form-group">
+                <label style="min-width:100px;">列</label>
+                <div class="col-md-15">
+                    @Html.DropDownList("Seat", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.STARTPOINTID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!--座席の番号-->
+            <div class="form-group">
+                <label style="min-width:100px;">番号</label>
+                <div class="col-md-15">
+                    @Html.DropDownList("Seat_num", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ENDPOINTID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!-- 料金を表示 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.PRICE, "料金", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PRICE, new { htmlAttributes = new { @class = "form-control", @value = 2500, @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.PRICE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!--ラジオボタン 初期値未反映, modelの参照先を調整して修正予定-->
+        <div class="form-group">
+            <div class="col-md-10" style="display:flex; flex-direction:row; align-items:center;">
+                <div style="display:flex; flex-direction:row">
+
+                    <!-- チェックボックスのチェック有無：サンプル -->
+                    @if (card == "checked")
+                        {
+                    @Html.RadioButton("card", "", true, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                        }
+                        else
+                        {
+                    @Html.RadioButton("card", "", false, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                        }
+
+
+                    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger", @checked = "downBtn" })
+                    <label style="min-width:150px;">クレジットカード</label>
+                </div>
+                <div style="display:flex; flex-direction:row">
+                    <!-- チェックボックスのチェック有無：サンプル -->
+                    @if (coin == "checked")
+                        {
+                    @Html.RadioButton("card", "", true, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                        }
+                        else
+                        {
+                    @Html.RadioButton("card", "", false, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                        }
+
+
+                    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+                    <label style="min-width:100px;">現金</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="予約確定" class="btn btn-default" onclick="" />
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

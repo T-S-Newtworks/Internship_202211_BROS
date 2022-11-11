@@ -1,0 +1,135 @@
+﻿@using Internship_Template.Models.Entity
+@using Internship_Template.Common
+<script>
+    /**
+    * ログイン画面遷移
+    * */
+    function Logout(){
+        var url = location.protocol + "//" + location.host + "/Login/ExecuteLogout";
+        location.href = url;
+
+    }
+    /**
+    * 予約一覧確認画面遷移
+    * */
+    function ToReservationList() {
+        var url = location.protocol + "//" + location.host + "/T_RESERVE/Index";
+        location.href = url;
+    }
+    /**
+    * 座席予約画面遷移
+    * */
+    function ToSearchSeat() {
+        var url = location.protocol + "//" + location.host + "/T_DATEANDTIME/Index";
+        location.href = url;
+    }
+
+</script>
+<style>
+    .userInfo{
+        color:#fff;
+        padding-left:0.5rem;
+        padding-right:0.5rem;
+   }
+
+    .userInfoName{
+        color:#fff;
+    }
+    a.userInfoControlBtn {
+        position: relative;
+        display: block;
+        min-width: 30px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        margin: auto;
+        background-color: rgba(0,0,0,.1);
+        border-radius: 99999px;
+        font-size: 1.6rem;
+        color: #fff;
+        text-decoration: none;
+        line-height: 1;
+        transition: background-color .3s;
+    }
+
+</style>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - 高速バス座席予約システム B.R.O.S</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+</head>
+<body style="padding-top:0px;">
+    <nav class="navbar navbar-expand-lg navbar-dark sysBaseColor">
+        <div class="container-fluid">
+            <i class="navbar-brand fa-2x fas fa-bus" style="color:white;">
+                @Html.ActionLink("B.R.O.S", "Index", "Home", new { area = "" }, new { @class = "navbar-brand mb-0 h1" })
+            </i>
+            @if (Session[M_SESSION.SessionKey] is T_USER || Internship_Util.GetValue<string>("debugMode") == "Admin")
+            {
+
+                T_USER loginedUser = Session[M_SESSION.SessionKey] == null ? null : (T_USER)Session[M_SESSION.SessionKey];
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    @if (loginedUser != null)
+                    {
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                            <li class="nav-item nav-link active">
+                                <div class="userInfo" style="cursor:pointer;">
+                                    <a onclick="ToSearchSeat()">座席予約</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item nav-link active">
+                                <div class="userInfo" style="cursor:pointer;">
+                                    <a onclick="ToReservationList()">予約確認</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item nav-link active userInfo">
+                                @loginedUser.FULLNAME
+                            </li>
+                            <li class="nav-item nav-link active userInfo">
+                                @{string role = loginedUser.ADMINFLG == "1" ? "管理者" : "利用者";
+                                }
+                                @role
+                            </li>
+                            <li class="nav-item nav-link active">
+                                <div id="userInfo" class="userInfo">
+                                    <!-- 開閉ボタン -->
+                                    <a id="userInfoControlBtn" class="userInfoControlBtn" href="~/Users/Index?id=@loginedUser.ID">
+                                        <i class="fas fa-user-cog fa-fw userInfoControlBtnIcon"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item nav-link active">
+                                <div class="userInfo" style="cursor:pointer;">
+                                    <a onclick="Logout()">ログアウト</a>
+                                </div>
+                            </li>
+
+                        </ul>
+                    }
+                </div>
+            }
+        </div>
+    </nav>
+    @**<div class="container body-content">*@
+        @RenderBody()
+        <!--<hr />-->
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - マイ ASP.NET アプリケーション</p>
+            </footer>*@
+    @*</div>*@
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

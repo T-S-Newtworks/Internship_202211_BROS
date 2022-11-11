@@ -1,0 +1,176 @@
+﻿@using Internship_Template.Models.Entity
+@model List<T_USER>
+
+@{
+    ViewBag.Title = "Home Page";
+    //ログイン情報インスタンス化
+    T_USER loginedUser = Session[M_SESSION.SessionKey] == null ? null : (T_USER)Session[M_SESSION.SessionKey];
+}
+
+@Styles.Render("~/Content/common")
+
+
+<script>
+    /**
+     * 未実装ボタンクリック時
+     * */
+    function unimplemented() {
+        alert("この機能は未実装です。");
+        return;
+    }
+    /**
+     * 確認画面遷移
+     * */
+    function MoveToList() {
+        location.href = location.protocol + "//" + location.host + "/T_RESERVE/Index";
+    }
+    /**
+    * 予約画面遷移
+     * */
+    function MoveToCreateReserve() {
+        location.href = location.protocol + "//" + location.host + "/T_DATEANDTIME/Index";
+    }
+    /**
+    * マイページ画面遷移
+    * */
+    function MoveToMyPage() {
+        location.href = location.protocol + "//" + location.host + "/Users/Index";
+    }
+    /**
+    * 予約状態一覧画面遷移
+     * */
+    function MoveToReserveList() {
+        location.href = location.protocol + "//" + location.host + "/T_RESERVE/Index";
+    }
+
+</script>
+
+<style>
+    .s100.avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .homeContent {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        min-width: 850px;
+    }
+
+    .contentBody {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        display: flex;
+    }
+
+    .vacant2 {
+        height: 2rem;
+    }
+
+    .vacant1 {
+        height: 1rem;
+    }
+</style>
+
+
+<div class="main">
+    <div id="content" class="homeContent mb-3">
+        <div class="card">
+            <div class="card-body" style="width:max-content;">
+                <div class="container px-4 px-md-3">
+                    <div class="column">
+                        <h1 class="MenuTitle">お知らせ</h1>
+                        <br />
+                        <p class="defaultTxt">
+                            BROSへようこそ<br />
+                        </p>
+                        <div class="contentWrapper">
+                            <p>
+                                ▶バス予約システムを実装しました。
+                            </p>
+                            <p>
+                                ▶予約確認ができるようになりました。
+                            </p>
+                            <a href="#" onclick="unimplemented();">
+                                通知履歴一覧
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body" style="width:max-content;">
+                <h1 class="MenuTitle">メニュー一覧</h1>
+                <div class="row" style="width:inherit;">
+                    <div class="form-group col-4 pb-4">
+                        <div class="cardItem">
+                            <div class="cardTxtArea">
+                                <div class="contentWrapper defaultTxt">
+                                    <h3>バスの予約</h3>
+                                </div>
+                                <div class="contentWrapper defaultTxt">
+                                    <p>
+                                        バスの日時を指定して予約することが出来ます。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="contentWrapper">
+                                <div class="cardButtonArea">
+                                    <button class="btnDefault sysBaseColor" onclick="MoveToCreateReserve();">
+                                        予約画面へ
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-4 pb-4">
+                        <div class="cardItem">
+                            <div class="cardTxtArea">
+                                <div class="contentWrapper defaultTxt">
+                                    <h3>予約確認</h3>
+                                </div>
+                                <div class="contentWrapper defaultTxt">
+                                    <p>
+                                        予約の確認とキャンセルが出来ます。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="contentWrapper">
+                                <div class="cardButtonArea">
+                                    <button class="btnDefault sysBaseColor" onclick="MoveToList();">
+                                        予約確認画面へ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-4 pb-4">
+                        <div class="cardItem">
+                            <div class="cardTxtArea">
+                                <div class="contentWrapper defaultTxt">
+                                    <h3>マイページ</h3>
+                                </div>
+                                <div class="contentWrapper defaultTxt">
+                                    <p>
+                                        自分の登録情報を確認できます。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="contentWrapper">
+                                <div class="cardButtonArea">
+                                    <button class="btnDefault sysBaseColor" onclick="unimplemented();">
+                                        マイページへ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

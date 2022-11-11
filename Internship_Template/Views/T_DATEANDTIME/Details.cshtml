@@ -1,0 +1,34 @@
+﻿@model Internship_Template.Models.Entity.T_DATEANDTIME
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>T_DATEANDTIME</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.YMD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YMD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.T_TIMETABLE.DIRECTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.T_TIMETABLE.DIRECTION)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

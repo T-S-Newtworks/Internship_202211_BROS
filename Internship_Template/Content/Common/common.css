@@ -1,0 +1,323 @@
+﻿body {
+
+}
+
+a {
+    color: #58bff6;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #aaa;
+    }
+
+.pull-right {
+    float: right;
+}
+
+.pull-left {
+    float: left;
+}
+
+.clear-fix {
+    clear: both;
+}
+
+div#form {
+    position: absolute;
+    width: 360px;
+    background-color: #fff;
+    margin: auto;
+    border-radius: 5px;
+    padding: 20px;
+    left: 50%;
+    top: 50%;
+    margin-left: -180px;
+    margin-top: -200px;
+}
+
+.form {
+    max-width: 600px;
+    margin-right: auto;
+    margin-left: auto;
+    border: solid;
+    border-color: #d3cfdd;
+    border-radius: 8px;
+}
+
+input {
+    transition: all .2s ease;
+}
+
+    input.form-style {
+        color: #8a8a8a;
+        display: block;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        max-width: none;
+        height: 44px;
+        padding: 5px 5%;
+        border: 1px solid #ccc;
+        -moz-border-radius: 27px;
+        -webkit-border-radius: 27px;
+        border-radius: 27px;
+        -moz-background-clip: padding;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        background-color: #fff;
+        font-family: 'HelveticaNeue','Arial', sans-serif;
+        font-size: 105%;
+        letter-spacing: .8px;
+    }
+
+    div.form-item .form-style:focus {
+        outline: none;
+        border: 1px solid #58bff6;
+        color: #58bff6;
+    }
+
+div.form-item p.formLabel {
+    position: absolute;
+    left: 26px;
+    top: 2px;
+    transition: all .4s ease;
+    color: #bbb;
+}
+
+.formTop {
+    top: -22px !important;
+    left: 26px;
+    background-color: #fff;
+    padding: 0 5px;
+    font-size: 14px;
+    color: #58bff6 !important;
+}
+
+.formStatus {
+    color: #8a8a8a !important;
+}
+
+input[type="submit"].login {
+    float: right;
+    width: 112px;
+    height: 37px;
+    -moz-border-radius: 19px;
+    -webkit-border-radius: 19px;
+    border-radius: 19px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    background-color: #55b1df;
+    border: 1px solid #55b1df;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+    input[type="submit"].login:hover {
+        background-color: #fff;
+        border: 1px solid #55b1df;
+        color: #55b1df;
+        cursor: pointer;
+    }
+
+    input[type="submit"].login:focus {
+        outline: none;
+    }
+
+.card-group {
+    background-color: #f7f5fb;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+
+.card{
+    margin-top:1rem;
+}
+
+.cardItem {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,.2)
+}
+
+.btnDefault {
+    border: 2px solid #34629d !important;
+    color: #FFFFFF !important;
+    border-radius: 0.4rem !important;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px 20px !important;
+    cursor: pointer;
+    width: fit-content;
+}
+
+/**
+ベースカラー
+*/
+.sysBaseColor {
+    background-color: #6666FF;
+}
+
+    /**
+    ヘッダー
+    */
+.container-fluid {
+    width: 80% !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.navbar-expand-lg .navbar-collapse {
+    justify-content: flex-end !important;
+}
+/**
+    見出し
+    */
+.MenuTitle {
+    border-bottom: 1px solid;
+    border-color: #FF4133;
+    font-family: 'Meiryo UI';
+    width: fit-content;
+}
+
+    .defaultTxt {
+        font-family: 'Meiryo UI';
+    }
+
+    /**
+    メニュー内のカード
+    */
+
+.contentWrapper {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.cardTxtArea {
+/*    height: 50%;
+*/}
+
+.cardButtonArea {
+    /*    height: 50%;
+*/ display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.card-img {
+    border-radius: 5px 5px 0 0;
+    max-width: 100%;
+    height: auto;
+}
+
+.memberList{
+    height:350px !important;
+    border: 0px !important;
+}
+
+/*カスタムデザインのスクロールバー*/
+.customBar {
+    overflow-y: scroll;
+}
+
+    .customBar::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .customBar::-webkit-scrollbar-track {
+        border-radius: 5px;
+        background: rgba(110, 108, 108, 0.2);
+    }
+
+    .customBar::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: #808080;
+    }
+
+
+ /*validation*/
+.field-validation-error {
+    font-size: 12px;
+    color: #E23E57;
+}
+
+.topSpace {
+    margin-top: 5rem;
+}
+
+.btnSmall {
+    border: 2px solid #34629d !important;
+    color: #FFFFFF !important;
+    border-radius: 0.4rem !important;
+    font-weight: bold;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.deleteBtn {
+    background-color: #c0341d;
+    border-color: #a62d19;
+    color: #fff;
+    margin-top: 3px;
+    margin-bottom: 4px;
+    margin-right: 10px;
+}
+
+.profileTitle {
+    width: 80%;
+    margin: auto;
+    font-size: 3rem;
+}
+
+.profileContent {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    min-width: 600px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.profileCard {
+    min-width:600px;
+}
+
+.buttonContent {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.profileButton {
+    margin-left: 10px;
+    margin-top: 20px !important;
+    width: 120px;
+    height: 50px;
+}
+
+.inputItem {
+    margin: 10px;
+}
+
+.itemLabel {
+    min-width: 120px;
+}
+
+.size20 {
+    font-size: 20px;
+}
+

@@ -1,0 +1,213 @@
+﻿@using Internship_Template.Models.Entity
+@model List<T_USER>
+
+@{
+    ViewBag.Title = "Index";
+    //ログイン情報インスタンス化
+    T_USER loginedUser = Session[M_SESSION.SessionKey] == null ? null : (T_USER)Session[M_SESSION.SessionKey];
+}
+
+@Styles.Render("~/Content/common")
+
+
+
+<style>
+
+    .card > .content-list > li {
+        padding: 10px 16px;
+    }
+
+    .content-list.members-list li {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .members-list {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        padding: 0 !important;
+    }
+
+    .list-item-name {
+        display: flex;
+        align-items: center;
+    }
+
+    .s60.avatar {
+        width: 60px;
+        height: 60px;
+        margin-right: 10px;
+    }
+
+    .member-controls {
+        display: flex;
+        align-items: center;
+    }
+
+    .userState{
+        margin:5px;
+    }
+
+    .prepend-left-5 {
+        margin-left: 5px;
+    }
+
+
+    .badge-success {
+        padding: 4px 5px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        display: inline-block;
+        color: #fff;
+        background-color: #1aaa55;
+    }
+
+    .searchLabel {
+        margin: auto;
+        padding: 10px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .resultTextBox {
+        padding: 0.5em 1em;
+        margin: 2em 0;
+        color: #fff;
+        background: #1aaa55;
+        border-radius: 9px;
+        width:max-content;
+    }
+
+        .resultTextBox p {
+            margin: 0;
+            padding: 0;
+        }
+
+    .failureTextBox {
+        padding: 0.5em 1em;
+        margin: 2em 0;
+        color: #fff;
+        background: #ff69b4;
+        border-radius: 9px;
+        width: max-content;
+    }
+
+        .failureTextBox p {
+            margin: 0;
+            padding: 0;
+        }
+</style>
+
+<script>
+    function MoveToAddUser() {
+        location.href = location.protocol + "//" + location.host + "/Users/Create";
+    }
+
+    function MoveToDeleteUser(e) {
+        var id = e.value;
+        location.href = location.protocol + "//" + location.host + "/Users/Delete?id=" + id;
+    }
+</script>
+
+
+    <div class="container-fluid topSpace">
+        <div class="column" style="margin-bottom:0.5rem;">
+            <h3 class="MenuTitle">プロジェクトメンバー</h3>
+            <div style="display: flex; justify-content:space-between;">
+                <p class="defaultTxt">メンバーは管理者のみ追加・削除することができます。</p>
+                @if (loginedUser.ADMINFLG == "1")
+                {
+                    <button class="btnDefault sysBaseColor" onclick="MoveToAddUser()" style="max-width:180px; ">
+                        <i class="fas fa-user-plus">
+                            ユーザー追加
+                        </i>
+                    </button>
+                }
+            </div>
+            @using (Html.BeginForm("Search", "Users"))
+            {
+                <div style="display: flex; justify-content:flex-end; margin-top:10px;">
+                    <div style="display: flex; flex-direction:row">
+                        @Html.Label("ユーザ名", htmlAttributes: new { @class = "searchLabel" })
+                         <input class="textBox form-control" name="userName" type="text" placeholder="ユーザ名を入力">
+                    </div>
+                        @*ドロップダウンをモデルから生成する場合はViewBag等に埋め込んで持ってきてあげましょう。
+                            紫本P105～参照*@
+                     <div style="display: flex; flex-direction:row">
+                        @Html.Label("権限",htmlAttributes: new { @class = "searchLabel" })
+                        <select class="textBox form-control" name="admin" style="margin: auto; height: -webkit-fill-available;">
+                            @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.AdminDropDown)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                     </div>
+                    <button class="btnDefault sysBaseColor" type="submit" style="margin-left: 30px">
+                        <i class="fas fa-search">
+                            検索
+                        </i>
+                    </button>
+                </div>
+            }
+
+        </div>
+
+        @if (ViewBag.resultText != null)
+        {
+            if (ViewBag.isSuccess != null)
+            {
+        <div class="resultTextBox">
+            @ViewBag.ResultText
+        </div>            
+            }
+                else
+                {
+        <div class="failureTextBox">
+            @ViewBag.ResultText
+        </div>            
+                }
+    @*<label style="color:">
+            </label>*@
+            }
+            <div class="card">
+                <div class="card-header">
+                    <span class="flex-project-title">
+                        メンバー一覧
+                    </span>
+                    <span class="badge badge-pill">@Model.Count members in this project</span>
+
+                </div>
+                <ul class="content-list members-list">
+                    @if (Model.Any())
+                    {
+                        foreach (var member in Model)
+                        {
+                            <li class="group_member member">
+                                <span class="list-item-name">
+                                    <img src=@Url.Action( "show", "Image", new { id =member.ID} ) class="avatar s60 js-lazy-loaded" />
+                                    @Html.ActionLink(member.FULLNAME, "Detail", new { id = member.ID }, new { @style = "color:#000000 !important;", @class = "userState" })
+                                    @{
+                                        string userRole = member.ADMINFLG == "1" ? "(管理者)" : "(利用者)";
+                                        <span class="member-access-text userState">@userRole</span>
+                                    }
+                                    @if (member.ID == loginedUser.ID)
+                                    {
+                                        <span class="badge badge-success prepend-left-5">It's you</span>
+                                    }
+                                </span>
+                                <div class="controls member-controls">
+                                    @if (loginedUser.ADMINFLG == "1")
+                                    {
+                                        <button class="btn deleteBtn" id="deleteBtn" onclick="MoveToDeleteUser(this)" value="@member.ID">
+                                            <i class="fas fa-trash-alt">
+                                                削除
+                                            </i>
+                                        </button>}
+                                </div>
+                                </li>
+                                    }
+                    }
+                </ul>
+            </div>
+    </div>

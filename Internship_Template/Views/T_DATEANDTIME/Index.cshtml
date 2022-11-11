@@ -1,0 +1,221 @@
+﻿@using Internship_Template.Models
+@using Internship_Template.Common
+@model IEnumerable<Internship_Template.Models.Entity.T_DATEANDTIME>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+@Styles.Render("~/Content/common")
+@Styles.Render("~/Content/customdatatable.css")
+@Styles.Render("~/Content/jquery.dataTables.css")
+@Styles.Render("~/Content/dataTables.bootstrap4.css")
+@Styles.Render("~/Content/site.css")
+
+@Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+@Scripts.Render("~/Scripts/dataTables.bootstrap4.min.js")
+<script>
+    /**
+     * 未実装ボタンクリック時
+     * */
+    function unimplemented() {
+        alert("この機能は未実装です。");
+        return;
+    }
+    /**
+     * 入力内容に1つでも漏れがあるとき
+     * 
+     **/
+
+    /**
+     * ユーザー一覧画面遷移
+     * */
+    function MoveToUserList(e) {
+        var id = e.value.split("+");
+        var direction = id[0];
+        var dateandtimeid = id[1];
+        location.href = location.protocol + "//" + location.host + "/T_RESERVE/Create?Direction=" + direction + "&DateandtimeId=" + dateandtimeid;
+    }
+    /**
+    * ホーム画面遷移
+    * */
+    function BackToHome(e) {
+        var e = e || window.event;
+        var url = location.protocol + "//" + location.host + "/Home/Index";
+        location.href = url;
+    }
+
+    function inputChange(e) {
+        //let select = document.querySelector('[name="pulldown"]');
+        var test = e.value;
+        // formタグのもとを作成
+        //var _form = document.createElement("form");
+        //_form.action = "Index?hospitalId=" + test; //選択値設定
+        //$("body").append(_form);
+        //// formを送信
+        //_form.submit();
+        var _form = document.createElement("form");
+        //_form.action = ""; //選択値設定
+        // 追加で送信するパラメータ
+        var newValue = document.createElement('input');
+        // 画面に表示されてしまうので、隠す
+        newValue.type = "hidden";
+        // パラメータ名
+        newValue.name = "hospitalId";
+        // パラメータ値
+        newValue.value = test;
+
+        _form.appendChild(newValue);
+        // formを送信
+        $("body").append(_form);
+
+        _form.submit();
+        //location.href = location.protocol + "//" + location.host + "/home/MakeChart?hospitalId=" + test; //選択値設定
+
+
+    }
+</script>
+
+<div class="container-fluid topSpace">
+    <style>
+        /*タイトル*/
+        .title {
+            margin-top: 70px;
+            margin-bottom: 40px;
+        }
+
+
+        /*検索BOX*/
+        .search-box input[type="text"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 1px solid #D6D6D6;
+        }
+
+        table td {
+            background: #eee;
+        }
+
+        table tr:nth-child(even) td {
+            background: #fff;
+        }
+    </style>
+
+    @*タイトル*@
+    <div class="title">
+        <h2><u>時刻表検索</u></h2>
+    </div>
+    <body>
+        <div>Return to Home Page</div>
+        <button class="btnDefault sysBaseColor" onclick="BackToHome();">
+            ←ホームへ戻る
+        </button>
+    </body>
+    <center>
+        <h3>バスの方向と出発日を指定してください</h3>
+    </center>
+    <center>
+        @using (Html.BeginForm("Search", "T_DATEANDTIME"))
+    {
+        <div class="search-box">
+            方向
+            <select name="direction" id="directionID">
+                @if (ViewBag.SelectDirection == "0"){
+                <option value="0" selected>上り</option>
+                <option value="1">下り</option>
+                }else if(ViewBag.SelectDirection == "1"){
+                <option value="0">上り</option>
+                <option value="1" selected>下り</option>
+                }else{
+                <option hidden>選択して下さい</option>
+                <option value="0">上り</option>
+                <option value="1">下り</option>
+                }
+            </select>
+            出発日
+            @if (ViewBag.SelectYMD != ""){
+            <input name="ymd" type="date" min="2022-11-07" max="2022-11-13" value=@ViewBag.SelectYMD>
+            }else{
+            <input name="ymd" type="date" min="2022-11-07" max="2022-11-13">
+            }
+            <button class="btnDefault sysBaseColor" type="submit" onclick="DisplayList()" style="margin-left: 30px">
+                <i class="fas fa-search">
+                    検索
+                </i>
+            </button>
+        </div>
+    }
+    </center>
+
+    <!--上りテーブル-->
+    @if (ViewBag.SelectDirection == "0" || ViewBag.SelectDirection == null || ViewBag.SelectDirection == "選択して下さい")
+{
+
+    <table class="table" id="myTable" border="1" rules="cols" bordercolor="lightblue">
+        <thead>
+            <tr>
+                <th width="20%" scope="row"></th>
+                <th width="15%">日立</th>
+                <th width="15%">常陸多賀</th>
+                <th width="15%">上野</th>
+                <th width="15%">東京</th>
+            </tr>
+        </thead>
+        <tbody>
+
+         @foreach (var item in Model)
+            {
+            <tr>
+                <td width="20%" style="text-align: center;"><button class="btnDefault sysBaseColor" onclick="MoveToUserList(this)" value="@item.T_TIMETABLE.DIRECTION+@item.ID">予約</button></td>
+                <td width="15%" style="vertical-align: middle;">@Html.DisplayFor(modelItem => item.T_TIMETABLE.HITACHI_TIME)</td>
+                <td width="15%" style="vertical-align: middle;">@Html.DisplayFor(modelItem => item.T_TIMETABLE.HITACHITAGA_TIME)</td>
+                <td width="15%" style="vertical-align: middle;">@Html.DisplayFor(modelItem => item.T_TIMETABLE.UENO_TIME)</td>
+                <td width="15%" style="vertical-align: middle;">@Html.DisplayFor(modelItem => item.T_TIMETABLE.TOKYO_TIME)</td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+
+
+}
+else
+{
+    <table class="table" id="myTable" border="1" rules="cols" bordercolor="lightblue">
+        <thead>
+            <tr>
+                <th width="20%" scope="row"></th>
+                <th width="15%">東京</th>
+                <th width="15%">上野</th>
+                <th width="15%">常陸多賀</th>
+                <th width="15%">日立</th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td width="20%" style="text-align: center;"><button class="btnDefault sysBaseColor" onclick="MoveToUserList(this)" value="@item.T_TIMETABLE.DIRECTION+@item.ID">予約</button></td>
+                <td width="15%" style="vertical-align: middle;">@Html.DisplayFor(modelItem => item.T_TIMETABLE.TOKYO_TIME)</td>
+                <td width="15%" style="vertical-align: middle;">@Html.DisplayFor(modelItem => item.T_TIMETABLE.UENO_TIME)</td>
+                <td width="15%" style="vertical-align: middle;">@Html.DisplayFor(modelItem => item.T_TIMETABLE.HITACHITAGA_TIME)</td>
+                <td width="15%" style="vertical-align: middle;">@Html.DisplayFor(modelItem => item.T_TIMETABLE.HITACHI_TIME)</td>
+            </tr>
+         }
+        </tbody>
+    </table>
+}
+    <div class="error_mesage">
+        @if (ViewBag.ErrorText != null)
+    {
+        <label style="text-align: center; width: 100%; margin-right: 5%; margin-left: 5%; color:red">
+            @ViewBag.ErrorText
+        </label>
+    }
+    </div>
+</div>
+
+

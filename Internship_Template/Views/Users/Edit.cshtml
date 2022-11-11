@@ -1,0 +1,121 @@
+﻿@model Internship_Template.Models.Entity.T_USER
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+@Scripts.Render("~/Script/common")
+@Styles.Render("~/Content/common")
+
+
+<script>
+    function BackToDetail(e) {
+        var e = e || window.event;
+        var elem = e.currentTarget;
+        var id = elem.value;
+        var url = location.protocol + "//" + location.host + "/Users/Detail?id=" + id;
+        location.href = url;
+    }
+
+</script>
+
+<style>
+
+    .txtDisp {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .s200.avatar {
+        width: 200px;
+        height: 200px;
+        margin-right: 10px;
+    }
+</style>
+
+<div id="content" class="topSpace">
+    <div>
+        <h1 class="profileTitle">
+            プロフィール編集画面
+        </h1>
+    </div>
+
+    @using (Html.BeginForm("EditComplete", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="profileContent">
+            <div class="card profileCard">
+                <div class="card-header text-white sysBaseColor">
+                    <i class="fas fa-user-cog">プロフィール編集</i>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="form-group col-6 pb-4">
+                                <div style="display:flex; flex-direction:column !important;">
+                                    <label class="itemLabel">アイコン</label>
+                                    <img src=@Url.Action("show", "Image", new { id = Model.ID }) class="avatar s200 js-lazy-loaded" id="userIcon" />
+                                </div>
+                                <div style="display:flex; flex-direction:row;">
+                                    <input id="file_name" type="text" class="textBox form-control" readonly="readonly" onclick="$('#fileBtn').click()" style="max-width:none;"/>
+                                    <label for="file" style="margin-left:10px;">
+                                        <!-- 非表示にする(type="file") -->
+                                        <input id="file" name="uploadImage" type="file" style="display: none;" />
+                                        <!-- 代わりのボタン -->
+                                        <span id="fileBtn" class="btn btnSmall sysBaseColor" style="cursor: pointer; width:max-content;">アイコン選択</span>
+                                    </label>
+                                </div>
+                                @Html.ViewData["msg"]
+                            </div>
+                            <div class="form-group col-6 pb-4">
+                                <div class="row inputItem">
+                                    <label class="itemLabel">名前</label>
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => model.FULLNAME, new { htmlAttributes = new { @class = "textBox form-control" } })
+                                    </div>
+                                </div>
+                                <div class="row inputItem">
+                                    <label class="itemLabel">管理者権限</label>
+                                    <div class="form-group">
+                                        @{
+                                            string userRole = Model.ADMINFLG == "1" ? "管理者" : "利用者";
+                                            <input type="text" class="textBox form-control" value="@userRole" readonly="readonly" />
+                                        }
+                                    </div>
+                                </div>
+                                <!--TODO: パスワードの変更を実装していない。できるようにすると良いでしょう-->
+                                @*<label>パスワード</label>
+        <div class="form-inline">
+            @Html.PasswordFor(model => model.TargetUser.T_LOGIN.PASSWORD, htmlAttributes: new { @class = "textBox form-control" })
+            @Html.ValidationMessageFor(model => model.TargetUser.T_LOGIN.PASSWORD, "", new { @id = "requiredPassWord" })
+        </div>*@
+                            </div>
+                            @Html.HiddenFor(model => model.ID, new { Value = @Model.ID })
+                            @Html.HiddenFor(model => model.ADMINFLG, new { Value = @Model.ADMINFLG })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="buttonContent">
+                <button type="submit" class="btn btnDefault sysBaseColor profileButton">
+                    <i class="fas fa-pen-alt">
+                        確定
+                    </i>
+                </button>
+                <button type="button" class="btn btn-secondary profileButton" value="@Model.ID" onclick="BackToDetail()">
+                    <i class="fas fa-reply">
+                        戻る
+                    </i>
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+

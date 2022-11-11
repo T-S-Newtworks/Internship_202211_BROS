@@ -1,0 +1,131 @@
+﻿@model Internship_Template.Models.Entity.T_USER
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+@Styles.Render("~/Content/common")
+
+
+<script>
+    function BackToIndex(e) {
+        var e = e || window.event;
+        var elem = e.currentTarget;
+        var id = elem.value;
+        var url = location.protocol + "//" + location.host + "/Users/Index";
+        url += ("?id=" + id);
+        location.href = url;
+    }
+
+</script>
+    <style >
+
+    .card > .content-list > li {
+        padding: 10px 16px;
+    }
+
+    .content-list.members-list li {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .members-list {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        padding: 0 !important;
+    }
+
+    .list-item-name {
+        display: flex;
+        align-items: center;
+    }
+
+    .s200.avatar {
+        width: 200px;
+        height: 200px;
+        margin-right: 10px;
+
+    }
+
+    .member-controls {
+        display: flex;
+        align-items: center;
+    }
+
+    .deleteBtn {
+        background-color: #c0341d;
+        border-color: #a62d19;
+        color: #fff;
+        margin-top: 3px;
+        margin-bottom: 4px;
+        margin-right: 10px;
+    }
+</style>
+
+    <div id="content" class="topSpace">
+        <div>
+            <h1 class="profileTitle">ユーザー削除画面</h1>
+        </div>
+        @using (Html.BeginForm("ExecuteDelete", "Users", new {id=Model.ID }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="profileContent">
+                <div class="card profileCard">
+                    <div class="card-header text-white sysBaseColor">
+                        <div class="container">
+                            <i class="fas fa-user-cog">プロフィール削除</i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-6 pb-4">
+                                    <div class="form-inline">
+                                        <img src=@Url.Action("show", "Image", new { id = Model.ID }) class="avatar s200 js-lazy-loaded" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-6 pb-4 size20">
+                                    <div class="row">
+                                        <label class="itemLabel">ID</label>
+                                        <div class="form-group ">
+                                            <label >@Model.ID</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="itemLabel">名前</label>
+                                        <div class="form-group ">
+                                            <label>@Model.FULLNAME</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="itemLabel">権限</label>
+                                        @{ string kengen = Model.ADMINFLG == "1" ? "管理者" : "利用者";
+                                            <div class="form-group">
+                                                <label>@kengen</label>
+                                            </div>
+                                        }
+                                    </div>
+
+                                </div>
+                                @Html.HiddenFor(model => model.ID, new { Value = @Model.ID })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="buttonContent">
+                        <button type="submit" class="btn deleteBtn profileButton">
+                            <i class="fas fa-trash-alt">
+                                削除
+                            </i>
+                        </button>
+                        <button type="button" class="btn btn-secondary profileButton" value="@Model.ID" onclick="BackToIndex()">
+                            <i class="fas fa-reply">
+                            戻る
+                            </i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>

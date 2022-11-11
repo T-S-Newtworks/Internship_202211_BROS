@@ -1,0 +1,112 @@
+﻿@using Internship_Template.Common
+@using Internship_Template.Models.Entity
+@model T_USER
+
+@{
+    ViewBag.Title = "Profile";
+    //ログイン情報インスタンス化
+    T_USER loginedUser = Session[M_SESSION.SessionKey] == null ? null : (T_USER)Session[M_SESSION.SessionKey];
+}
+@Styles.Render("~/Content/common")
+
+<script>
+    function HistoryBack(e) {
+        var value = e.value;
+        var url;
+        if (value == "1") {
+            url = location.protocol + "//" + location.host;
+        }
+        else {
+            url = location.protocol + "//" + location.host + "/Users/Index";
+        }
+        location.href = url;
+
+    }
+</script>
+
+<style>
+
+    .txtDisp {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .s200.avatar {
+        width: 200px;
+        height: 200px;
+        margin-right: 10px;
+    }
+</style>
+
+<div id="content" class="topSpace">
+    <div>
+        <h1 class="profileTitle">プロフィール確認画面</h1>
+    </div>
+
+    @using (Html.BeginForm("Edit", "Users", new { id=Model.ID }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="profileContent">
+            <div class="card profileCard">
+                <div class="card-header text-white sysBaseColor">
+                    <i class="fas fa-user-cog">
+                        @Model.FULLNAME さんのプロフィールです。
+                    </i>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="form-group col-6 pb-4">
+                                <div class="form-inline">
+                                    <img src=@Url.Action("show", "Image", new { id = Model.ID }) class="avatar s200 js-lazy-loaded" />
+                                </div>
+                            </div>
+                            <div class="form-group col-6 pb-4 size20">
+                                <div class="row">
+                                    <label class="itemLabel">名前</label>
+                                    <div class="form-group ">
+                                        <label>@Model.FULLNAME</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="itemLabel">権限</label>
+                                    @{ string kengen = Model.ADMINFLG == "1" ? "管理者" : "利用者";
+                                        <div class="form-group">
+                                            <label>@kengen</label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            @*@Html.HiddenFor(model => model.ID, new { Value = @Model.ID })*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="buttonContent">
+                    @if (Internship_Util.GetValue<string>("debugMode") == "Admin" || loginedUser.ID == Model.ID)
+                    {
+                        <button class="btn btnDefault sysBaseColor profileButton">
+                            <i class="fas fa-pen-alt">
+                                編集
+                            </i>
+                        </button>
+                    }
+                    @{ int isTop = Model == null ? 1 : 0;
+                        <button type="button" class="btn btn-secondary profileButton" value="@isTop" onclick="HistoryBack(this)">
+                            <i class="fas fa-reply">
+                                戻る
+                            </i>
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

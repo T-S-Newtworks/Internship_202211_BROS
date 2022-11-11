@@ -1,0 +1,81 @@
+﻿@model  Internship_Template.Models.Entity.T_LOGIN
+@{
+    ViewBag.Title = "Index";
+}
+
+@Styles.Render("~/Content/common")
+
+<style>
+
+    .main {
+        display: flex;
+        height: 100%;
+    }
+    .loginForm {
+        min-width: 560px;
+        min-height: 315px;
+        margin: auto;
+    }
+
+    .loginFormTitle {
+        margin: 10px;
+    }
+
+    div.login-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+</style>
+
+@*ログインのトップ画面です。*@
+<div class="main">
+    <div class="form loginForm">
+        <div class="loginFormTitle">
+            <h2 style="text-align:center;">
+                ログイン<asp:EntityDataSource runat="server"></asp:EntityDataSource>
+            </h2>
+            @if (ViewBag.LogoutText != null)
+            {
+                <label style = "width:100%; margin-right:5%; margin-left:5%;">
+                    @ViewBag.LogoutText
+                </label>
+            }
+        </div>
+        @using (@Html.BeginForm("ExecuteLogin", "Login", FormMethod.Post))
+        {
+    <div class="login-item">
+        @Html.TextBoxFor(model => model.ID, htmlAttributes: new { @class = "form-style", @placeholder = "ID"})
+        @Html.ValidationMessageFor(model => model.ID, "", new { @id = "requiredId" })
+
+    </div>
+    <div class="login-item">
+        @Html.PasswordFor(model => model.PASSWORD, htmlAttributes: new { @class = "form-style", @placeholder = "PASSWORD" })
+        @Html.ValidationMessageFor(model => model.PASSWORD, "", new { @id = "requiredPassword" })
+        @Html.ValidationMessage("LoginError", htmlAttributes: new { @style = "color:#F5053D;" })
+        <p>
+            <a href="javaScript:void(0)" onclick="alert('この機能は未実装です')">
+                パスワードを忘れた場合はこちら
+            </a>
+        </p>
+    </div>
+        <div class="login-item">
+            <div>
+            <p class="pull-left">
+                <a href="javaScript:void(0)" onclick="alert('この機能は未実装です')">ユーザーを作成する場合はこちら</a>
+            </p>
+            <input type="submit" class=" login pull-right" value="ログイン"  />
+                </div>
+        </div>
+        }
+    </div>
+</div>
+
+
+

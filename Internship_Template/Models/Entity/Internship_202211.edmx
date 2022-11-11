@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="InternshipContext_202211.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_DATEANDTIME">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="5" Nullable="false" />
+          <Property Name="TIMETABLEID" Type="varchar2" MaxLength="5" Nullable="false" />
+          <Property Name="YMD" Type="date" />
+        </EntityType>
+        <EntityType Name="T_KENGEN">
+          <Key>
+            <PropertyRef Name="CODE" />
+          </Key>
+          <Property Name="CODE" Type="varchar2" MaxLength="2" Nullable="false" />
+          <Property Name="NAME" Type="varchar2" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="T_LOGIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="10" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar2" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_PAYMENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="5" Nullable="false" />
+          <Property Name="NAME" Type="varchar2" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="T_POINT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="5" Nullable="false" />
+          <Property Name="NAME" Type="varchar2" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="T_RESERVE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="5" Nullable="false" />
+          <Property Name="DATEANDTIMEID" Type="varchar2" MaxLength="5" />
+          <Property Name="STARTPOINTID" Type="varchar2" MaxLength="5" />
+          <Property Name="ENDPOINTID" Type="varchar2" MaxLength="5" />
+          <Property Name="SEAT" Type="varchar2" MaxLength="10" />
+          <Property Name="PRICE" Type="number" Precision="38" Scale="0" />
+          <Property Name="USERID" Type="varchar2" MaxLength="5" />
+          <Property Name="ISCANCEL" Type="varchar2" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="T_TIMETABLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="5" Nullable="false" />
+          <Property Name="DIRECTION" Type="varchar2" MaxLength="10" />
+          <Property Name="HITACHI_TIME" Type="varchar2" MaxLength="10" />
+          <Property Name="HITACHITAGA_TIME" Type="varchar2" MaxLength="10" />
+          <Property Name="TOKYO_TIME" Type="varchar2" MaxLength="10" />
+          <Property Name="UENO_TIME" Type="varchar2" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="T_USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="10" Nullable="false" />
+          <Property Name="FULLNAME" Type="varchar2" MaxLength="50" />
+          <Property Name="ICON" Type="blob" />
+          <Property Name="MIMETYPE" Type="varchar2" MaxLength="100" />
+          <Property Name="ADMINFLG" Type="varchar2" MaxLength="1" Nullable="false" />
+          <Property Name="ADDRESS" Type="varchar2" MaxLength="100" />
+          <Property Name="KENGENCODE" Type="varchar2" MaxLength="5" />
+          <Property Name="PAYMENTID" Type="varchar2" MaxLength="5" />
+          <Property Name="MAILADDRESS" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityContainer Name="InternshipContext_202211StoreContainer">
+          <EntitySet Name="T_DATEANDTIME" EntityType="Self.T_DATEANDTIME" Schema="INTERNSHIP_202211" store:Type="Tables" />
+          <EntitySet Name="T_KENGEN" EntityType="Self.T_KENGEN" Schema="INTERNSHIP_202211" store:Type="Tables" />
+          <EntitySet Name="T_LOGIN" EntityType="Self.T_LOGIN" Schema="INTERNSHIP_202211" store:Type="Tables" />
+          <EntitySet Name="T_PAYMENT" EntityType="Self.T_PAYMENT" Schema="INTERNSHIP_202211" store:Type="Tables" />
+          <EntitySet Name="T_POINT" EntityType="Self.T_POINT" Schema="INTERNSHIP_202211" store:Type="Tables" />
+          <EntitySet Name="T_RESERVE" EntityType="Self.T_RESERVE" Schema="INTERNSHIP_202211" store:Type="Tables" />
+          <EntitySet Name="T_TIMETABLE" EntityType="Self.T_TIMETABLE" Schema="INTERNSHIP_202211" store:Type="Tables" />
+          <EntitySet Name="T_USER" EntityType="Self.T_USER" Schema="INTERNSHIP_202211" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InternshipContext_202211" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_DATEANDTIME">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TIMETABLEID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="YMD" Type="DateTime" />
+          <NavigationProperty Name="T_RESERVE" Relationship="InternshipContext_202211.T_DATEANDTIMET_RESERVE" FromRole="T_DATEANDTIME" ToRole="T_RESERVE" />
+          <NavigationProperty Name="T_TIMETABLE" Relationship="InternshipContext_202211.T_DATEANDTIMET_TIMETABLE" FromRole="T_DATEANDTIME" ToRole="T_TIMETABLE" />
+        </EntityType>
+        <EntityType Name="T_KENGEN">
+          <Key>
+            <PropertyRef Name="CODE" />
+          </Key>
+          <Property Name="CODE" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="T_USER" Relationship="InternshipContext_202211.T_KENGENT_USER" FromRole="T_KENGEN" ToRole="T_USER" />
+        </EntityType>
+        <EntityType Name="T_LOGIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="T_USER" Relationship="InternshipContext_202211.T_LOGINT_USER" FromRole="T_LOGIN" ToRole="T_USER" />
+        </EntityType>
+        <EntityType Name="T_PAYMENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="T_USER" Relationship="InternshipContext_202211.T_PAYMENTT_USER" FromRole="T_PAYMENT" ToRole="T_USER" />
+        </EntityType>
+        <EntityType Name="T_POINT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="T_RESERVE" Relationship="InternshipContext_202211.T_RESERVET_POINT" FromRole="T_POINT" ToRole="T_RESERVE" />
+          <NavigationProperty Name="T_RESERVEEND" Relationship="InternshipContext_202211.T_POINTT_RESERVE" FromRole="T_POINT" ToRole="T_RESERVE" />
+        </EntityType>
+        <EntityType Name="T_RESERVE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DATEANDTIMEID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="STARTPOINTID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ENDPOINTID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SEAT" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PRICE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="USERID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ISCANCEL" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="T_USER" Relationship="InternshipContext_202211.T_RESERVET_USER" FromRole="T_RESERVE" ToRole="T_USER" />
+          <NavigationProperty Name="T_POINT" Relationship="InternshipContext_202211.T_RESERVET_POINT" FromRole="T_RESERVE" ToRole="T_POINT" />
+          <NavigationProperty Name="T_POINTEND" Relationship="InternshipContext_202211.T_POINTT_RESERVE" FromRole="T_RESERVE" ToRole="T_POINT" />
+          <NavigationProperty Name="T_DATEANDTIME" Relationship="InternshipContext_202211.T_DATEANDTIMET_RESERVE" FromRole="T_RESERVE" ToRole="T_DATEANDTIME" />
+        </EntityType>
+        <EntityType Name="T_TIMETABLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DIRECTION" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="HITACHI_TIME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="HITACHITAGA_TIME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TOKYO_TIME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UENO_TIME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="T_DATEANDTIME" Relationship="InternshipContext_202211.T_DATEANDTIMET_TIMETABLE" FromRole="T_TIMETABLE" ToRole="T_DATEANDTIME" />
+        </EntityType>
+        <EntityType Name="T_USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FULLNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ICON" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="MIMETYPE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ADMINFLG" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ADDRESS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="KENGENCODE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PAYMENTID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="MAILADDRESS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="T_LOGIN" Relationship="InternshipContext_202211.T_LOGINT_USER" FromRole="T_USER" ToRole="T_LOGIN" />
+          <NavigationProperty Name="T_KENGEN" Relationship="InternshipContext_202211.T_KENGENT_USER" FromRole="T_USER" ToRole="T_KENGEN" />
+          <NavigationProperty Name="T_PAYMENT" Relationship="InternshipContext_202211.T_PAYMENTT_USER" FromRole="T_USER" ToRole="T_PAYMENT" />
+          <NavigationProperty Name="T_RESERVE" Relationship="InternshipContext_202211.T_RESERVET_USER" FromRole="T_USER" ToRole="T_RESERVE" />
+        </EntityType>
+        <EntityContainer Name="Internship_202211" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_DATEANDTIME" EntityType="Self.T_DATEANDTIME" />
+          <EntitySet Name="T_KENGEN" EntityType="Self.T_KENGEN" />
+          <EntitySet Name="T_LOGIN" EntityType="Self.T_LOGIN" />
+          <EntitySet Name="T_PAYMENT" EntityType="Self.T_PAYMENT" />
+          <EntitySet Name="T_POINT" EntityType="Self.T_POINT" />
+          <EntitySet Name="T_RESERVE" EntityType="Self.T_RESERVE" />
+          <EntitySet Name="T_TIMETABLE" EntityType="Self.T_TIMETABLE" />
+          <EntitySet Name="T_USER" EntityType="Self.T_USER" />
+          <AssociationSet Name="T_LOGINT_USER" Association="InternshipContext_202211.T_LOGINT_USER">
+            <End Role="T_LOGIN" EntitySet="T_LOGIN" />
+            <End Role="T_USER" EntitySet="T_USER" />
+          </AssociationSet>
+          <AssociationSet Name="T_KENGENT_USER" Association="InternshipContext_202211.T_KENGENT_USER">
+            <End Role="T_KENGEN" EntitySet="T_KENGEN" />
+            <End Role="T_USER" EntitySet="T_USER" />
+          </AssociationSet>
+          <AssociationSet Name="T_PAYMENTT_USER" Association="InternshipContext_202211.T_PAYMENTT_USER">
+            <End Role="T_PAYMENT" EntitySet="T_PAYMENT" />
+            <End Role="T_USER" EntitySet="T_USER" />
+          </AssociationSet>
+          <AssociationSet Name="T_RESERVET_USER" Association="InternshipContext_202211.T_RESERVET_USER">
+            <End Role="T_RESERVE" EntitySet="T_RESERVE" />
+            <End Role="T_USER" EntitySet="T_USER" />
+          </AssociationSet>
+          <AssociationSet Name="T_RESERVET_POINT" Association="InternshipContext_202211.T_RESERVET_POINT">
+            <End Role="T_RESERVE" EntitySet="T_RESERVE" />
+            <End Role="T_POINT" EntitySet="T_POINT" />
+          </AssociationSet>
+          <AssociationSet Name="T_POINTT_RESERVE" Association="InternshipContext_202211.T_POINTT_RESERVE">
+            <End Role="T_POINT" EntitySet="T_POINT" />
+            <End Role="T_RESERVE" EntitySet="T_RESERVE" />
+          </AssociationSet>
+          <AssociationSet Name="T_DATEANDTIMET_RESERVE" Association="InternshipContext_202211.T_DATEANDTIMET_RESERVE">
+            <End Role="T_DATEANDTIME" EntitySet="T_DATEANDTIME" />
+            <End Role="T_RESERVE" EntitySet="T_RESERVE" />
+          </AssociationSet>
+          <AssociationSet Name="T_DATEANDTIMET_TIMETABLE" Association="InternshipContext_202211.T_DATEANDTIMET_TIMETABLE">
+            <End Role="T_DATEANDTIME" EntitySet="T_DATEANDTIME" />
+            <End Role="T_TIMETABLE" EntitySet="T_TIMETABLE" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="T_LOGINT_USER">
+          <End Type="InternshipContext_202211.T_LOGIN" Role="T_LOGIN" Multiplicity="1" />
+          <End Type="InternshipContext_202211.T_USER" Role="T_USER" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_LOGIN">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="T_KENGENT_USER">
+          <End Type="InternshipContext_202211.T_KENGEN" Role="T_KENGEN" Multiplicity="0..1" />
+          <End Type="InternshipContext_202211.T_USER" Role="T_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_KENGEN">
+              <PropertyRef Name="CODE" />
+            </Principal>
+            <Dependent Role="T_USER">
+              <PropertyRef Name="KENGENCODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="T_PAYMENTT_USER">
+          <End Type="InternshipContext_202211.T_PAYMENT" Role="T_PAYMENT" Multiplicity="0..1" />
+          <End Type="InternshipContext_202211.T_USER" Role="T_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_PAYMENT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_USER">
+              <PropertyRef Name="PAYMENTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="T_RESERVET_USER">
+          <End Type="InternshipContext_202211.T_RESERVE" Role="T_RESERVE" Multiplicity="*" />
+          <End Type="InternshipContext_202211.T_USER" Role="T_USER" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_RESERVE">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="T_RESERVET_POINT">
+          <End Type="InternshipContext_202211.T_RESERVE" Role="T_RESERVE" Multiplicity="*" />
+          <End Type="InternshipContext_202211.T_POINT" Role="T_POINT" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="T_POINT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_RESERVE">
+              <PropertyRef Name="STARTPOINTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="T_POINTT_RESERVE">
+          <End Type="InternshipContext_202211.T_POINT" Role="T_POINT" Multiplicity="0..1" />
+          <End Type="InternshipContext_202211.T_RESERVE" Role="T_RESERVE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_POINT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_RESERVE">
+              <PropertyRef Name="ENDPOINTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="T_DATEANDTIMET_RESERVE">
+          <End Type="InternshipContext_202211.T_DATEANDTIME" Role="T_DATEANDTIME" Multiplicity="0..1" />
+          <End Type="InternshipContext_202211.T_RESERVE" Role="T_RESERVE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_DATEANDTIME">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_RESERVE">
+              <PropertyRef Name="DATEANDTIMEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="T_DATEANDTIMET_TIMETABLE">
+          <End Type="InternshipContext_202211.T_DATEANDTIME" Role="T_DATEANDTIME" Multiplicity="*" />
+          <End Type="InternshipContext_202211.T_TIMETABLE" Role="T_TIMETABLE" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="T_TIMETABLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_DATEANDTIME">
+              <PropertyRef Name="TIMETABLEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InternshipContext_202211StoreContainer" CdmEntityContainer="Internship_202211">
+          <EntitySetMapping Name="T_DATEANDTIME">
+            <EntityTypeMapping TypeName="InternshipContext_202211.T_DATEANDTIME">
+              <MappingFragment StoreEntitySet="T_DATEANDTIME">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TIMETABLEID" ColumnName="TIMETABLEID" />
+                <ScalarProperty Name="YMD" ColumnName="YMD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_KENGEN">
+            <EntityTypeMapping TypeName="InternshipContext_202211.T_KENGEN">
+              <MappingFragment StoreEntitySet="T_KENGEN">
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_LOGIN">
+            <EntityTypeMapping TypeName="InternshipContext_202211.T_LOGIN">
+              <MappingFragment StoreEntitySet="T_LOGIN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_PAYMENT">
+            <EntityTypeMapping TypeName="InternshipContext_202211.T_PAYMENT">
+              <MappingFragment StoreEntitySet="T_PAYMENT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_POINT">
+            <EntityTypeMapping TypeName="InternshipContext_202211.T_POINT">
+              <MappingFragment StoreEntitySet="T_POINT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_RESERVE">
+            <EntityTypeMapping TypeName="InternshipContext_202211.T_RESERVE">
+              <MappingFragment StoreEntitySet="T_RESERVE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DATEANDTIMEID" ColumnName="DATEANDTIMEID" />
+                <ScalarProperty Name="STARTPOINTID" ColumnName="STARTPOINTID" />
+                <ScalarProperty Name="ENDPOINTID" ColumnName="ENDPOINTID" />
+                <ScalarProperty Name="SEAT" ColumnName="SEAT" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="ISCANCEL" ColumnName="ISCANCEL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_TIMETABLE">
+            <EntityTypeMapping TypeName="InternshipContext_202211.T_TIMETABLE">
+              <MappingFragment StoreEntitySet="T_TIMETABLE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DIRECTION" ColumnName="DIRECTION" />
+                <ScalarProperty Name="HITACHI_TIME" ColumnName="HITACHI_TIME" />
+                <ScalarProperty Name="HITACHITAGA_TIME" ColumnName="HITACHITAGA_TIME" />
+                <ScalarProperty Name="TOKYO_TIME" ColumnName="TOKYO_TIME" />
+                <ScalarProperty Name="UENO_TIME" ColumnName="UENO_TIME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_USER">
+            <EntityTypeMapping TypeName="InternshipContext_202211.T_USER">
+              <MappingFragment StoreEntitySet="T_USER">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+                <ScalarProperty Name="ICON" ColumnName="ICON" />
+                <ScalarProperty Name="MIMETYPE" ColumnName="MIMETYPE" />
+                <ScalarProperty Name="ADMINFLG" ColumnName="ADMINFLG" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="KENGENCODE" ColumnName="KENGENCODE" />
+                <ScalarProperty Name="PAYMENTID" ColumnName="PAYMENTID" />
+                <ScalarProperty Name="MAILADDRESS" ColumnName="MAILADDRESS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="なし" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

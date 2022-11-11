@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dbaf8d7e6b594edd86649a3ffdaea9c4" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="InternshipContext_202211.T_DATEANDTIME" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipContext_202211.T_KENGEN" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipContext_202211.T_LOGIN" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipContext_202211.T_PAYMENT" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipContext_202211.T_POINT" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipContext_202211.T_RESERVE" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipContext_202211.T_TIMETABLE" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipContext_202211.T_USER" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="InternshipContext_202211.T_LOGINT_USER" />
+        <AssociationConnector Association="InternshipContext_202211.T_KENGENT_USER" />
+        <AssociationConnector Association="InternshipContext_202211.T_PAYMENTT_USER" />
+        <AssociationConnector Association="InternshipContext_202211.T_RESERVET_USER" />
+        <AssociationConnector Association="InternshipContext_202211.T_RESERVET_POINT" />
+        <AssociationConnector Association="InternshipContext_202211.T_POINTT_RESERVE" />
+        <AssociationConnector Association="InternshipContext_202211.T_DATEANDTIMET_RESERVE" />
+        <AssociationConnector Association="InternshipContext_202211.T_DATEANDTIMET_TIMETABLE" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

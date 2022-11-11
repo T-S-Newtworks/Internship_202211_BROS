@@ -1,0 +1,163 @@
+﻿@using Internship_Template.Models
+@using Internship_Template.Common
+@model IEnumerable<Internship_Template.Models.Entity.T_RESERVE>
+
+@{
+    ViewBag.Title = "PreservationIndex";
+    var reserves = Model;
+}
+
+@Styles.Render("~/Content/common")
+@Styles.Render("~/Content/customdatatable.css")
+@Styles.Render("~/Content/jquery.dataTables.css")
+@Styles.Render("~/Content/dataTables.bootstrap4.css")
+@Styles.Render("~/Content/site.css")
+
+@Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+@Scripts.Render("~/Scripts/dataTables.bootstrap4.min.js")
+
+<script>
+    /**
+     * 未実装ボタンクリック時
+     * */
+    function unimplemented() {
+        alert("この機能は未実装です。");
+        return;
+    }
+    /**
+     * ホーム画面遷移
+     * */
+    function BackToHome(e) {
+        var e = e || window.event;
+        var url = location.protocol + "//" + location.host + "/Home/Index";
+        location.href = url;
+    }
+    /**
+     * キャンセル済み表示
+     * */
+    function MoveToCancelReservation(e) {
+        var id = e.value;
+        location.href = location.protocol + "//" + location.host + "/T_RESERVE/Cancel?id=" + id;
+    }
+    //jQueryの設定
+    $(document).ready(function () {
+        var test = $('#myTable')[0];
+        $('#myTable').DataTable({
+            pageLength: 10  // １ページあたりの行数(デフォルト：10)
+            , lengthChange: false
+        });
+    });
+
+</script>
+
+<style>
+    /*タイトル*/
+    .title {
+        margin-top: 70px;
+        margin-bottom: 40px;
+    }
+
+    /*jQueryのフィルター非表示*/
+    .dataTables_filter, .dataTables_info {
+        display: none;
+    }
+
+    /**test用*/
+    .mid {
+        vertical-align: inherit;
+    }
+
+</style>
+
+
+<div class="container-fluid topSpace">
+    <div class="column" style="margin-bottom:0.5rem;">
+        <div class="title">
+            <h1 class="MenuTitle">予約状態一覧</h1>
+        </div>
+
+
+        <body>
+            <button class="btnDefault sysBaseColor" onclick="BackToHome();">
+                ←ホームへ戻る
+            </button>
+        </body>
+
+
+        <!--テーブル-->
+        <div class="card-header" style="background: linear-gradient(180deg, #4169E1,#6666FF); ">
+            <span class="flex-project-title" style="color:white">
+                <i class="fas fa-solid fa-list" style="color:white;">
+                    予約リスト
+                </i>
+
+            </span>
+
+
+        </div>
+        <style>
+            table td {
+                background: #eee;
+            }
+
+            table tr:nth-child(even) td {
+                background: #fff;
+            }
+        </style>
+        <table class="table" id="myTable" border="1" rules="cols" bordercolor="lightblue">
+            <thead>
+                <tr align="middle" valign="middle">
+                    <th scope="row"></th>
+                    <th>日付</th>
+                    <th>出発場所</th>
+                    <th>到着場所</th>
+                    <th>座席</th>
+                    <th>料金[円]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reserve in reserves)
+                {
+                    <tr>
+
+
+
+                        <td width="30%" style="vertical-align: inherit;">
+                            @if (reserve.ISCANCEL is null)
+                            {
+
+                                <button class="btnDefault sysBaseColor" onclick="unimplemented();">
+                                    変更
+                                </button>
+                                <button class="btnDefault sysBaseColor" onclick="MoveToCancelReservation(this)" value="@reserve.ID">
+                                    キャンセル
+                                </button>
+                            }
+                            else
+                            {
+                                //更新処理
+                                //ActionResultでコントローラーに更新したい行のIDを渡す
+                                <p>キャンセル済み</p>
+                            }
+                        </td>
+                        @{
+                            var ymd = reserve.T_DATEANDTIME.YMD;
+                            string displayYMD = ymd.Value.ToString("yyyy年MM月dd日");
+
+                            decimal price = (decimal)reserve.PRICE;
+                            string displayPrice = price.ToString("N0");
+                        }
+
+                        <td width="20%" style="vertical-align: inherit;">@displayYMD</td>
+                        <td width="13%" style="vertical-align: inherit;">@Html.DisplayFor(modelItem => reserve.T_POINT.NAME)</td>
+                        <td width="13%" style="vertical-align: inherit;">@Html.DisplayFor(modelItem => reserve.T_POINTEND.NAME)</td>
+                        <td width="10%" style="vertical-align: inherit;">@Html.DisplayFor(modelItem => reserve.SEAT)</td>
+                        <td width="14%" style="vertical-align: inherit;">@displayPrice</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

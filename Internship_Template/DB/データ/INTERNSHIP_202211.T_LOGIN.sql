@@ -1,0 +1,9 @@
+insert into INTERNSHIP_202211.T_LOGIN(ID,PASSWORD) values ('0','pass');
+insert into INTERNSHIP_202211.T_LOGIN(ID,PASSWORD) values ('1','pass');
+insert into INTERNSHIP_202211.T_LOGIN(ID,PASSWORD) values ('2','pass');
+insert into INTERNSHIP_202211.T_LOGIN(ID,PASSWORD) values ('3','pass');
+insert into INTERNSHIP_202211.T_LOGIN(ID,PASSWORD) values ('4','pass');
+insert into INTERNSHIP_202211.T_LOGIN(ID,PASSWORD) values ('5','aaa');
+insert into INTERNSHIP_202211.T_LOGIN(ID,PASSWORD) values ('6','123');
+insert into INTERNSHIP_202211.T_LOGIN(ID,PASSWORD) values ('7','pass');
+insert into INTERNSHIP_202211.T_LOGIN(ID,PASSWORD) values ('8','pass');

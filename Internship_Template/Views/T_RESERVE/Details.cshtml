@@ -1,0 +1,74 @@
+﻿@model Internship_Template.Models.Entity.T_RESERVE
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>T_RESERVE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SEAT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SEAT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PRICE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PRICE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ISCANCEL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ISCANCEL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.T_USER.FULLNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.T_USER.FULLNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.T_POINT.NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.T_POINT.NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.T_POINTEND.NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.T_POINTEND.NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.T_DATEANDTIME.TIMETABLEID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.T_DATEANDTIME.TIMETABLEID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
